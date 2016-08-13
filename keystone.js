@@ -36,7 +36,7 @@ keystone.init({
 	//Application Configuration
 	'mongo': process.env.MONGOLAB_URI,
 	'cookie secret' : process.env.COOKIE_SECRET,
-	'cloudinary config' : process.env.CLOUDINARY_URL,
+	'cloudinary config' : process.env.CLOUDINARY_URL
 
 });
 
