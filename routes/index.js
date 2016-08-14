@@ -35,10 +35,10 @@
 	exports = module.exports = function (app) {
 		// Views
 		app.get('/', routes.views.index);
+		//API Routes/Endpoints
 		app.get('/gallery', routes.views.gallery);
 		app.get('/api/users', keystone.middleware.api, routes.api.users.index);
 		app.get('/api/users/:id', keystone.middleware.api, routes.api.users.show);
+		app.post('/api/users', keystone.middleware.api, routes.api.users.create);
 	};
 })();
-
-
