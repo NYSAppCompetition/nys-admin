@@ -3,14 +3,14 @@
 		User = keystone.list('User'),
 		utils = require('../../util/utils');
 	/**
-	 * Searches posts by query parameters.
+	 * Get all users from the database.
 	 * @param req
 	 * @param res
 	 */
 	exports.index = function(req, res){
 		User.model
 			.find({})
-			.select('-password')
+			.select('-password') //select all fields except password field
 			.exec(function(err, users){
 				if(err || !users){
 					utils.handleDBError(err, res)
@@ -20,13 +20,12 @@
 			});
 	};
 	/**
-	 * Get a single user given a slug.
+	 * Get a single user given an id.
 	 * @param req
 	 * @param res
 	 */
 	exports.show = function(req, res){
-		User
-			.model
+		User.model
 			.findOne({"_id": req.params.id})
 			.select('-password')
 			.exec(function(err, user){
@@ -37,11 +36,20 @@
 				}
 			});
 	};
-
+	/**
+	 * Create a user from the request body
+	 * @param  {[type]} req [description]
+	 * @param  {[type]} res [description]
+	 * @return {[type]}     [description]
+	 */
 	exports.create = function(req, res){
-		
-
+		var user = new User.model(req.body);
+		user.save(function(err){
+			if(err){
+				utils.handleDBError(err, res);
+			}else{
+				res.json(user._id);
+			}
+		});
 	};
-
-	
 })();
